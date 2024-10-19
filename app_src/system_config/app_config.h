@@ -42,7 +42,7 @@
 #define	 CFG_SDK_VER_CHIPID			(0xB5)
 #define  CFG_SDK_MAJOR_VERSION	0 //	(0)
 #define  CFG_SDK_MINOR_VERSION	6 //	(5)
-#define  CFG_SDK_PATCH_VERSION	4  //	(0)
+#define  CFG_SDK_PATCH_VERSION	5  //	(0)
 
 
 #define CFG_RONGYUAN_CMD
