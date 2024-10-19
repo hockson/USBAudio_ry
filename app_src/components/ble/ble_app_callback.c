@@ -14,9 +14,17 @@
 #if (BLE_SUPPORT)
 
 uint8_t BleConnectFlag = 0;
+
 #ifdef CFG_RONGYUAN_CMD
-extern uint8_t  hid_tx_buf[];
-extern uint16_t ble_tx_length;
+void bt_tx_data(uint8_t *buf, uint8_t len)
+{
+	if(BleConnectFlag == 0)	return;
+	
+	if(len>0 && len<240)
+	{
+		ble_send_data(0x0,0,0,0x0e,buf,len,0);
+	}
+}
 
 #endif
 
@@ -106,12 +114,14 @@ void AppEventCallBack(LE_CB_EVENT event, LE_CB_PARAMS *param)
     case LE_DISCONNECT:
         printf("\n***********LE_DISCONNECT************\n");
         BLE_INFO("disconnect reson: 0x%02x\ndisconnect handle: 0x%04x\nindex: 0x%04x\n",
-                 param->dis_params.reason, param->dis_params.conhdl, param->dis_params.conidx);
+        param->dis_params.reason, param->dis_params.conhdl, param->dis_params.conidx);
+	 BleConnectFlag = 0;
         break;
     case LE_CONNECT_PARAMS_UPDATE:
         printf("\n*****LE_CONNECT_PARAMS_UPDATE*****\n");
         BLE_INFO("con_interval: %d\ncon_latency: %d\nSupervision timeout: %d\n",
-                 param->con_update_param.con_interval, param->con_update_param.con_latency, param->con_update_param.sup_to);
+        param->con_update_param.con_interval, param->con_update_param.con_latency, param->con_update_param.sup_to);
+	 BleConnectFlag = 1;
         break;
     case LE_MTU_EXCHANGE_RESULT:
     {
@@ -143,17 +153,17 @@ void AppEventCallBack(LE_CB_EVENT event, LE_CB_PARAMS *param)
 		if((param->rcv_data.data[0] == 0xA5 && param->rcv_data.data[1] == 0x5A)) //Ö¡Í·
 		{
 			roboeffect_prot_parse_big_block(param->rcv_data.data, param->rcv_data.len);
-			if(ble_tx_length>0 && ble_tx_length<245)
-			{
-				ble_send_data(param->rcv_data.conhdl,0,0,0x0e,hid_tx_buf,ble_tx_length,0);
-				ble_tx_length = 0;
-				break;
-			}
+//			if(ble_tx_length>0 && ble_tx_length<240)
+//			{
+//				ble_send_data(param->rcv_data.conhdl,0,0,0x0e,hid_tx_buf,ble_tx_length,0);
+//				ble_tx_length = 0;
+//				break;
+//			}
 		}
-#endif  
-		
+#else		
         //·¢ËÍÊ¾Àý
         ble_send_data(param->rcv_data.conhdl,0,0,0x0e,err_buff,sizeof(err_buff),0);
+#endif  
         break;
     }
     case LE_APP_READ_DATA_EVENT:

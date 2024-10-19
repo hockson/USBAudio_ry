@@ -245,25 +245,14 @@ static void SysVarInit(void)
 	APP_DBG("Effect3D:%d,%d\n", Effect3D, pBpSysInfo->Effect3D);
 
 #if 1 // new eq
-//	if((pBpSysInfo->EqGain[0][0] > 25) || (pBpSysInfo->EqGain[1][0] > 25) ||(pBpSysInfo->EqGain[2][0] > 25)||
-//		(pBpSysInfo->EqGain[3][0] > 25)||(pBpSysInfo->EqGain[4][0] > 25)||(pBpSysInfo->EqGain[5][0] > 25)||
-//		(pBpSysInfo->EqGain[6][0] > 25)||(pBpSysInfo->EqGain[7][0] > 25))
-
-//	if((pBpSysInfo->EqGain[0][0] != 12) || (pBpSysInfo->EqGain[0][1] != 12) ||(pBpSysInfo->EqGain[0][2] != 12)||
-//		(pBpSysInfo->EqGain[0][3]!= 12)||(pBpSysInfo->EqGain[0][4]!= 12)||(pBpSysInfo->EqGain[0][5] != 12)||
-//		(pBpSysInfo->EqGain[0][6]!= 12)||(pBpSysInfo->EqGain[0][7]!= 12))
-
 	{
 	for(j=0;j<EQ_MAX_NUM;j++) {
 		APP_DBG("\n EqGain[%d]: \n", j);
 	for(i=0;i<10;i++)
 	{
 		EqGain[j][i] = pBpSysInfo->EqGain[j][i];
-		if(EqGain[j][i] > 25)
+		if(EqGain[j][i] > 24)
 			EqGain[j][i] = 12;
-	
-		//EqGain[j][i] = default_EqGain[j][i];
-
 		APP_DBG("%d ", EqGain[j][i]);
 	}
 		APP_DBG("\n");
@@ -282,12 +271,25 @@ static void SysVarInit(void)
 	}
 #endif
 
-	for(i=0;i<10;i++)
+	for(i=0;i<7;i++)
 	{
 		earEqGain[i] = pBpSysInfo->earEqGain[i];
-		if(earEqGain[i] > 25)
+		if(earEqGain[i] > 24)
 			earEqGain[i] = 12;
 	}
+
+	earEqGain[7] = pBpSysInfo->earEqGain[7];
+	if(earEqGain[7] > 100)
+		earEqGain[7] = 0;
+
+	earEqGain[8] = pBpSysInfo->earEqGain[8];
+	if(earEqGain[8] > 100)
+		earEqGain[8] = 0;
+
+	earEqGain[9] = pBpSysInfo->earEqGain[9];
+	if(earEqGain[9] > 100)
+		earEqGain[9] = 0;
+	
 #endif
 
 #else

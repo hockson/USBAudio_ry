@@ -73,6 +73,9 @@ static const int16_t VolumeTable[CFG_PARA_MAX_VOLUME_NUM + 1] = {	// 100
 
 
 #ifdef CFG_RONGYUAN_CMD
+extern void Communication_rongyuan_0x32(uint8_t *buf, uint32_t len);
+extern void Communication_rongyuan_0x33(uint8_t *buf, uint32_t len);
+
 #define GAIN_Step_Max 25
 static const int16_t eq_gain_table[GAIN_Step_Max] = {
 0xf400, 0xf500, 0xf600, 0xf700, 0xf800, 0xf900, 0xfa00, 0xfb00, 0xfc00, 0xfd00, 0xfe00, 0xff00, 
@@ -444,6 +447,7 @@ uint8_t AudioCommonMsgProcess(uint16_t Msg)
 		if(++EqMode >= EQ_MAX_NUM)
 			EqMode = 0;
 		refresh_addr = AudioEqSync();
+		Communication_rongyuan_0x33(&EqMode, 0);
 		break;
 		
 	case MSG_EQ_S6:
@@ -469,6 +473,7 @@ uint8_t AudioCommonMsgProcess(uint16_t Msg)
 #endif
 		
 		refresh_addr = AudioEqSync();
+		Communication_rongyuan_0x33(&refresh_addr, 0);
 		APP_DBG("MSG_EQ_S6= %d\n",custEqMode);
 		break;
 		
@@ -479,6 +484,7 @@ uint8_t AudioCommonMsgProcess(uint16_t Msg)
 			EqMode = EQ_OFF;			
 		
 		refresh_addr = AudioEqSync();
+		Communication_rongyuan_0x33(&refresh_addr, 0);
 		break;
 	case MSG_CUST_EQ2:
 		if(EqMode != EQ_CUST2)
@@ -486,6 +492,7 @@ uint8_t AudioCommonMsgProcess(uint16_t Msg)
 		else
 			EqMode = EQ_OFF;			
 		refresh_addr = AudioEqSync();
+		Communication_rongyuan_0x33(&refresh_addr, 0);
 		break;
 	case MSG_CUST_EQ3:
 		if(EqMode != EQ_CUST3)
@@ -493,23 +500,32 @@ uint8_t AudioCommonMsgProcess(uint16_t Msg)
 		else
 			EqMode = EQ_OFF;			
 		refresh_addr = AudioEqSync();
+		Communication_rongyuan_0x33(&refresh_addr, 0);
 		break;
 	case MSG_MUSIC_VOLUP:
 		AudioMusicVolUp();
 		refresh_addr = AudioMusicVolSync();
+
+		Communication_rongyuan_0x32(&refresh_addr, 0);
 		break;
 	case MSG_MUSIC_VOLDOWN:
 		AudioMusicVolDown();
 		refresh_addr = AudioMusicVolSync();
+
+		Communication_rongyuan_0x32(&refresh_addr, 0);
 		break;
 #if CFG_RES_MIC_SELECT
 	case MSG_MIC_VOLUP:
 		AudioMicVolUp();
 		refresh_addr = AudioMicVolSync();
+
+		Communication_rongyuan_0x32(&refresh_addr, 0);
 		break;
 	case MSG_MIC_VOLDOWN:
 		AudioMicVolDown();
 		refresh_addr = AudioMicVolSync();
+
+		Communication_rongyuan_0x32(&refresh_addr, 0);
 		break;
 #endif
 	case MSG_3D:
@@ -519,6 +535,8 @@ uint8_t AudioCommonMsgProcess(uint16_t Msg)
 			Effect3D = 1;
 		APP_DBG("MSG_3D  %d\n",Effect3D);
 		refresh_addr = Audio3D(Effect3D);
+
+		Communication_rongyuan_0x32(&refresh_addr, 0);
 		break;
 	case MSG_MUSIC_MUTE:
 		if(MusicMute) 
@@ -527,7 +545,9 @@ uint8_t AudioCommonMsgProcess(uint16_t Msg)
 			MusicMute = 1;
 		APP_DBG("MSG_MUSIC_MUTE  %d\n",MusicMute);
 		refresh_addr = AudioMusicMute(MusicMute);
-		break;
+
+		Communication_rongyuan_0x32(&refresh_addr, 0);
+ 		break;
 	
 	case MSG_MIC_MUTE:
 		if(MicMute) 
@@ -536,7 +556,9 @@ uint8_t AudioCommonMsgProcess(uint16_t Msg)
 			MicMute = 1;
 		APP_DBG("MSG_MIC_MUTE  %d\n",MicMute);
 		refresh_addr = AudioMicMute(MicMute);
-		break;
+
+		Communication_rongyuan_0x32(&refresh_addr, 0);
+ 		break;
 	case MSG_MIC_AEC:
 		if(MicAec) 
 			MicAec = 0;
@@ -544,7 +566,9 @@ uint8_t AudioCommonMsgProcess(uint16_t Msg)
 			MicAec = 1;
 		APP_DBG("MSG_MIC_AEC  %d\n",MicAec);
 		refresh_addr = AudioMicAec(MicAec);
-		break;
+
+		Communication_rongyuan_0x32(&refresh_addr, 0);
+ 		break;
 		
 	case MSG_MUSIC_BASS_DW:
 		if(--MusicBassStep < 0) MusicBassStep = 0;

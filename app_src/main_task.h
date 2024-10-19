@@ -172,7 +172,7 @@ enum _SYS_SOFTWARE_FLAG_
 #else
 	#define CFG_PARA_MAX_VOLUME_NUM		       (100) //(32)	//SDK 32 级音量
 	#define CFG_PARA_SYS_VOLUME_DEFAULT		(80) //(25)	//SDK默认音量
-	#define CFG_PARA_MIC_VOLUME_DEFAULT		(80) //(26)	//SDK默认音量
+	#define CFG_PARA_MIC_VOLUME_DEFAULT		(90) //(26)	//SDK默认音量
 	
 #endif
 

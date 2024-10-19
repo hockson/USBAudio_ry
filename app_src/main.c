@@ -341,6 +341,14 @@ int main(void)
 #ifdef CFG_FUNC_DISPLAY_EN
  	DispInit(0);
 #endif
+#ifdef CFG_RONGYUAN_CMD
+
+#if CUSTOM_MODEL == MODEL_G1
+	EXT_MUTE_INIT();
+	EXT_MUTE_ON();
+#endif
+
+#endif
 
 	APP_DBG("\n");
 	APP_DBG("****************************************************************\n");

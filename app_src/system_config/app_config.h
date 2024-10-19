@@ -42,7 +42,7 @@
 #define	 CFG_SDK_VER_CHIPID			(0xB5)
 #define  CFG_SDK_MAJOR_VERSION	0 //	(0)
 #define  CFG_SDK_MINOR_VERSION	6 //	(5)
-#define  CFG_SDK_PATCH_VERSION	5  //	(0)
+#define  CFG_SDK_PATCH_VERSION	6  //	(0)
 
 
 #define CFG_RONGYUAN_CMD
@@ -74,10 +74,17 @@
 							GPIO_RegOneBitClear(GPIO_B_PU, x),\
 							GPIO_RegOneBitClear(GPIO_B_PD, x),\
 							GPIO_RegOneBitSet(GPIO_B_OE, x),\
-							GPIO_RegOneBitClear(GPIO_B_IE, x),\
+							GPIO_RegOneBitClear(GPIO_B_IE, x)
 
+#if CUSTOM_MODEL == MODEL_G1
+#define EXT_MUTE_PIN		GPIOA16
 
-#if CUSTOM_MODEL == MODEL_GS20
+#define EXT_MUTE_INIT()  	    GPIOA_INIT(EXT_MUTE_PIN)
+
+#define EXT_MUTE_ON()           		GPIO_RegOneBitClear(GPIO_A_OUT, EXT_MUTE_PIN)
+#define EXT_MUTE_OFF()           	GPIO_RegOneBitSet(GPIO_A_OUT, EXT_MUTE_PIN)
+
+#elif CUSTOM_MODEL == MODEL_GS20
 #define LED1_PIN		GPIOA17
 #define LED2_PIN		GPIOA16
 #define LED3_PIN		GPIOA15

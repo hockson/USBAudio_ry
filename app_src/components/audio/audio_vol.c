@@ -91,19 +91,21 @@ void HardWareMuteOrUnMute(void)
 	{
 
 		//GPIO_PortAModeSet(GPIOA6, 0);  // Rx, A9:uart1_rxd_1
-		GPIO_RegOneBitClear(GPIO_A_IE, GPIO_INDEX16);
-		GPIO_RegOneBitSet(GPIO_A_OE, GPIO_INDEX16);
-		GPIO_RegOneBitClear(GPIO_A_OUT, GPIO_INDEX16);
+		//GPIO_RegOneBitClear(GPIO_A_IE, GPIO_INDEX16);
+		//GPIO_RegOneBitSet(GPIO_A_OE, GPIO_INDEX16);
+		//GPIO_RegOneBitClear(GPIO_A_OUT, GPIO_INDEX16);
 		
 		APP_DBG("++++++++++++++++++++++ HardWare Mute\n");
+		EXT_MUTE_ON();
 	}
 	else
 	{
-		GPIO_RegOneBitClear(GPIO_A_IE, GPIO_INDEX16);
-		GPIO_RegOneBitSet(GPIO_A_OE, GPIO_INDEX16);
-		GPIO_RegOneBitSet(GPIO_A_OUT, GPIO_INDEX16);
+		//GPIO_RegOneBitClear(GPIO_A_IE, GPIO_INDEX16);
+		//GPIO_RegOneBitSet(GPIO_A_OE, GPIO_INDEX16);
+		//GPIO_RegOneBitSet(GPIO_A_OUT, GPIO_INDEX16);
 		
 		APP_DBG("---------------------- HardWare UnMute\n");
+		EXT_MUTE_OFF();
 
 	}
 #endif

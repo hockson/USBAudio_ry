@@ -36,10 +36,6 @@ bool hid_tx_buf_is_used = 0;
 uint8_t  cbuf[20];
 uint8_t  tx_buf[256]     = {0xa5, 0x5a, 0x00, 0x00,};
 
-#ifdef CFG_RONGYUAN_CMD
-uint16_t ble_tx_length;
-#endif
-
 const char AudioLibVer[] = AUDIO_EFFECT_LIBRARY_VERSION;
 const char RoboeffectLibVer[] = ROBOEFFECT_LIB_VER;
 
@@ -104,10 +100,6 @@ void Communication_Effect_Send(uint8_t *buf, uint32_t len)
 	hid_tx_buf_is_used = 1;
 #endif
 	memcpy(hid_tx_buf, buf, 256);
-
-#ifdef CFG_RONGYUAN_CMD
-	ble_tx_length = len;
-#endif
 
 #endif
 }
@@ -1617,6 +1609,9 @@ void Communication_Effect_0xff(uint8_t *buf, uint32_t len)
 }
 
 #ifdef CFG_RONGYUAN_CMD
+extern void bt_tx_data(uint8_t *buf, uint8_t len);
+void Communication_rongyuan_0x33(uint8_t *buf, uint32_t len);
+
 void Communication_rongyuan_0x31(uint8_t *buf, uint32_t len)
 {
 	//uint8_t TempUUID[8];
@@ -1646,7 +1641,9 @@ void Communication_rongyuan_0x31(uint8_t *buf, uint32_t len)
 
 
 	tx_buf[17] = 0x16;
-	Communication_Effect_Send(tx_buf, 18);
+
+	bt_tx_data(tx_buf, 18);
+//	Communication_Effect_Send(tx_buf, 18);
 }
 
 void Comm_AUD_0x32(uint8_t * buf)
@@ -1690,12 +1687,13 @@ void Comm_AUD_0x32(uint8_t * buf)
 			AudioMicVolSync();
 			break;
         case 4:/// eq mode
-        	if(TmpData > 5)
+        	if(TmpData >= EQ_MAX_NUM)
         	{
-	        	TmpData = 5;
+	        	TmpData = 0;
         	}
 		EqMode = TmpData;
 		AudioEqSync();
+		Communication_rongyuan_0x33(&TmpData, 0);
             break;
 	case 5:	// 7.1 channel
       		if(TmpData > 1)
@@ -1803,7 +1801,8 @@ void Communication_rongyuan_0x32(uint8_t *buf, uint32_t len)
 
 
 		tx_buf[25] = 0x16;
-		Communication_Effect_Send(tx_buf,26);
+		bt_tx_data(tx_buf, 26);
+		//Communication_Effect_Send(tx_buf,26);
 	}
 	else
 	{
@@ -1869,7 +1868,9 @@ void Communication_rongyuan_0x33(uint8_t *buf, uint32_t len)
 		tx_buf[23]  = EqGain[EqMode][9];
 		
 		tx_buf[25] = 0x16;
-		Communication_Effect_Send(tx_buf,26);
+
+		bt_tx_data(tx_buf, 26);
+		//Communication_Effect_Send(tx_buf,26);
 	}
 	else
 	{
@@ -1935,7 +1936,9 @@ void Communication_rongyuan_0x34(uint8_t *buf, uint32_t len)
 		//tx_buf[23]  = earEqGain[9];
 		
 		tx_buf[19] = 0x16;
-		Communication_Effect_Send(tx_buf,20);
+
+		bt_tx_data(tx_buf, 20);
+		//Communication_Effect_Send(tx_buf,20);
 	}
 	else
 	{
