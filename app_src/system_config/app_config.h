@@ -62,7 +62,7 @@
 #define MODEL_GS20		2
 #define MODEL_S6		3
 
-#define CUSTOM_MODEL	MODEL_S6
+#define CUSTOM_MODEL	MODEL_GS20 // MODEL_S6
 
 #define GPIOA_INIT(x)  	    GPIO_PortAModeSet(x, 0),\
 							GPIO_RegOneBitClear(GPIO_A_PU, x),\
@@ -103,9 +103,15 @@
 #define DISP_LED3_ON()           	GPIO_RegOneBitClear(GPIO_A_OUT, LED3_PIN)
 #define DISP_LED3_OFF()           	GPIO_RegOneBitSet(GPIO_A_OUT, LED3_PIN)
 
-#define DISP_LED4_INIT()  	    GPIOA_INIT(LED3_PIN)
+#define DISP_LED4_INIT()  	    GPIOA_INIT(LED4_PIN)
 #define DISP_LED4_ON()           	GPIO_RegOneBitClear(GPIO_A_OUT, LED4_PIN)
 #define DISP_LED4_OFF()           	GPIO_RegOneBitSet(GPIO_A_OUT, LED4_PIN)
+
+//#define  CFG_FUNC_DETECT_PHONE_EN
+//#define  DET_PHONE_INPUT_PIN	GPIOA20
+#define  EXT_AMP_MUTE_PIN		GPIOA6
+
+#define CFG_RES_IO_KEY_SCAN
 
 #elif CUSTOM_MODEL == MODEL_S6
 #define LED1_PIN		GPIOA17
@@ -571,7 +577,7 @@
 #define CFG_FUNC_DEBUG_EN
 //#define CFG_FUNC_USBDEBUG_EN
 #ifdef CFG_FUNC_DEBUG_EN
-	#define CFG_UART_TX_PORT 				DEBUG_TX_A20   // DEBUG_TX_A18 // DEBUG_TX_A10
+	#define CFG_UART_TX_PORT 				DEBUG_TX_A21   // DEBUG_TX_A18 // DEBUG_TX_A10
 	#define CFG_UART_BANDRATE   			DEBUG_BAUDRATE_2000000//DEBUG_BAUDRATE_115200
 	#define CFG_FLASHBOOT_DEBUG_EN          (1)
 

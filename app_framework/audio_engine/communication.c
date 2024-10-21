@@ -1612,6 +1612,107 @@ void Communication_Effect_0xff(uint8_t *buf, uint32_t len)
 extern void bt_tx_data(uint8_t *buf, uint8_t len);
 void Communication_rongyuan_0x33(uint8_t *buf, uint32_t len);
 
+//#include <stdio.h>
+//#include <stdlib.h>
+
+const char *get_compiled_date_yyyy_mm_dd(void)
+{
+    // __DATE__ result: Apr 23 2020
+    // 2020-04-23\0 is 11 chars
+    static char date_origin_format_buf[11] = {0};   // store __DATE__ chars
+    int month = 0;               // store month number
+    int i = 0;
+    if (date_origin_format_buf[0] == 0) {          // can delete
+        static const char *static_month_buf[] = {
+        "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+        const char *cp_date = __DATE__;   // get origin format :month date year
+        // store year to start of date_origin_format_buf
+        // memcpy(date_origin_format_buf, cp_date + 7, 4);
+        for (i = 0; i < 4; i++) {
+            date_origin_format_buf[i] = *(cp_date + 7 + i);
+        }
+        // store date to start of date_origin_format_buf, but decade is ' ' when day little than 10
+        // memcpy(date_origin_format_buf + 6, cp_date + 4, 2);
+//        for(i = 0; i < 12; i++) {
+//            // When static_month_buf[i] and cp_date store the same value in memory, month is i+1.
+//            if(memcmp(static_month_buf[i], cp_date, 3) == 0) {
+//                month = i+1;
+//                printf("%d\n", month);
+//                break;
+//            }
+//        }
+        for(i = 0; i < 12; i++) { //
+            // When _month[i] and cp_date store the same value in memory, month is i+1.
+                if((static_month_buf[i][0] == (cp_date[0])) &&
+                   (static_month_buf[i][1] == (cp_date[1])) &&
+                   (static_month_buf[i][2] == (cp_date[2]))) {
+                    month = i+1;
+                    break;
+                }
+        }
+        date_origin_format_buf[4] = '-';
+        date_origin_format_buf[5] = month / 10 % 10 + '0';
+        date_origin_format_buf[6] = month % 10 + '0';
+        date_origin_format_buf[7] = '-';
+        // judge day is little than 10
+        if (cp_date[4] == ' ') {
+            date_origin_format_buf[8] = '0';
+        } else {
+            date_origin_format_buf[8] = cp_date[4];
+        }
+        date_origin_format_buf[9] = cp_date[5];
+    }
+    return date_origin_format_buf;
+}
+
+const char *get_compiled_date_yyyymmdd(void)
+{
+    // __DATE__ result: Apr 23 2020, Apr232020 is 9 chars
+    // 20200423\0 is 9 chars
+    static char date_origin_format_buf[9] = {0};   // store __DATE__ chars
+    int month = 0;               // store month number
+    int i = 0;
+    if (date_origin_format_buf[0] == 0) {          // can delete
+        static const char *static_month_buf[] = {
+        "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+        const char *cp_date = __DATE__;   // get origin format :month date year
+        // store year to start of date_origin_format_buf
+        // memcpy(date_origin_format_buf, cp_date + 7, 4);
+        for (i = 0; i < 4; i++) {
+            date_origin_format_buf[i] = *(cp_date + 7 + i);
+        }
+        // store date to start of date_origin_format_buf, but decade is ' ' when day little than 10
+        // memcpy(date_origin_format_buf + 6, cp_date + 4, 2);
+
+//        for(i = 0; i < 12; i++) {
+//            // When static_month_buf[i] and cp_date store the same value in memory, month is i+1.
+//            if(memcmp(static_month_buf[i], cp_date, 3) == 0) {
+//                month = i+1;
+//                break;
+//            }
+//        }
+        for(i = 0; i < 12; i++) { //
+            // When _month[i] and cp_date store the same value in memory, month is i+1.
+                if((static_month_buf[i][0] == (cp_date[0])) &&
+                   (static_month_buf[i][1] == (cp_date[1])) &&
+                   (static_month_buf[i][2] == (cp_date[2]))) {
+                    month = i+1;
+                    break;
+                }
+        }
+        date_origin_format_buf[4] = month / 10 % 10 + '0';
+        date_origin_format_buf[5] = month % 10 + '0';
+        // judge day is little than 10
+        if (cp_date[4] == ' ') {
+            date_origin_format_buf[6] = '0';
+        } else {
+            date_origin_format_buf[6] = cp_date[4];
+        }
+        date_origin_format_buf[7] = cp_date[5];
+    }
+    return date_origin_format_buf;
+}
+
 void Communication_rongyuan_0x31(uint8_t *buf, uint32_t len)
 {
 	//uint8_t TempUUID[8];
@@ -1644,6 +1745,9 @@ void Communication_rongyuan_0x31(uint8_t *buf, uint32_t len)
 
 	bt_tx_data(tx_buf, 18);
 //	Communication_Effect_Send(tx_buf, 18);
+
+   // printf("time2: %s\n", get_compiled_date_yyyy_mm_dd());
+
 }
 
 void Comm_AUD_0x32(uint8_t * buf)

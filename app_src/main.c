@@ -343,10 +343,11 @@ int main(void)
 #endif
 #ifdef CFG_RONGYUAN_CMD
 
-#if CUSTOM_MODEL == MODEL_G1
+//#if CUSTOM_MODEL == MODEL_G1
+#if 0 // def EXT_MUTE_ON()
 	EXT_MUTE_INIT();
 	EXT_MUTE_ON();
-#endif
+#endif	
 
 #endif
 
@@ -355,6 +356,7 @@ int main(void)
 	APP_DBG("|                    MVsB5_BT_Audio_SDK                        |\n");
 	APP_DBG("|            Mountain View Silicon Technology Co.,Ltd.         |\n");
 	APP_DBG("|            SDK Version: %d.%d.%d                                |\n", CFG_SDK_MAJOR_VERSION, CFG_SDK_MINOR_VERSION, CFG_SDK_PATCH_VERSION);
+	APP_DBG("|            Build Time : %s, %s                                |\n", __DATE__, __TIME__);
 	APP_DBG("****************************************************************\n");
 	APP_DBG("sys clk =%ld\n",Clock_SysClockFreqGet());
 

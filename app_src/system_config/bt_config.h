@@ -171,7 +171,7 @@ enum
  *****************************************************************/
 #if BT_A2DP_SUPPORT
 
-//#define BT_AUDIO_AAC_ENABLE		//AAC解码开关
+#define BT_AUDIO_AAC_ENABLE		//AAC解码开关
 //Note1:开启AAC,需要同步开启解码器类型USE_AAC_DECODER(app_config.h)
 //Note2:目前双手机配置跟AAC解码不能同时打开
 #if (defined(BT_AUDIO_AAC_ENABLE) && defined(BT_MULTI_LINK_SUPPORT))

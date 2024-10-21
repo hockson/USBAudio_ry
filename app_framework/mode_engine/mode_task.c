@@ -232,8 +232,9 @@ void PowerOnModeGenerate(void *BpSysInfo)
 		}
 	}
 #endif
+
 #ifdef CFG_RONGYUAN_CMD
-	Mode = ModeBtAudioPlay; 
+	Mode = ModeIdle; // ModeBtAudioPlay; 
 #endif
 
 	for(i_count = 0;i_count < SYS_MODE_MAX_NUMBER;i_count++)

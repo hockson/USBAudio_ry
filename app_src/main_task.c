@@ -172,10 +172,16 @@ static void SysVarInit(void)
 	else if(EqMode == EQ_CUST3)
 	{
 		custEqMode = 2;
-	}else 
+	}
+	else 
 	{
 		EqMode = EQ_CUST1;
 		custEqMode = 0;
+	}
+#elif CUSTOM_MODEL == MODEL_GS20
+	if((EqMode != EQ_CUST2) || (EqMode != EQ_CUST3) || (EqMode != EQ_CUST3))
+	{
+		custEqMode = EQ_MODE_FLAT;
 	}
 #else
 	if(EqMode > EQ_MAX_NUM)
@@ -242,6 +248,11 @@ static void SysVarInit(void)
 	APP_DBG("MicAec:%d,%d\n", MicAec, pBpSysInfo->MicAec);
 
 	Effect3D = pBpSysInfo->Effect3D;
+#ifdef CFG_RONGYUAN_CMD
+#if CUSTOM_MODEL == MODEL_GS20
+	Effect3D = 1;
+#endif
+#endif
 	APP_DBG("Effect3D:%d,%d\n", Effect3D, pBpSysInfo->Effect3D);
 
 #if 1 // new eq

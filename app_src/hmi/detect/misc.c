@@ -20,6 +20,7 @@
 #include "misc.h"
 #include "i2s.h"
 #include "user_effect_parameter.h"
+#include "Delay.h"
 
 #define HW_DEVICE_NUMBER		3
 #define  HW_DECTED_DLY	 2
@@ -260,6 +261,8 @@ void DetectEarPhone(void)
 	if(!PhoneTimeInit)
 	{
 		PhoneTimeInit = 1;
+		APP_DBG("****** Ear Phone detect init...\n");
+		
 		PhoneCnt = 0;
 		gCtrlVars.EarPhoneOnlin = 0;
 		GPIO_RegOneBitClear(PHONE_DETECT_OE, PHONE_DETECT_PIN);
@@ -268,6 +271,8 @@ void DetectEarPhone(void)
 		GPIO_RegOneBitSet(PHONE_DETECT_PU, PHONE_DETECT_PIN);
 		GPIO_RegOneBitClear(PHONE_DETECT_PD, PHONE_DETECT_PIN);
 		DelayUs(50);
+
+		MUTE_ON();
 		if(!GPIO_RegOneBitGet(PHONE_DETECT_IN,PHONE_DETECT_PIN))
 		//if(GPIO_RegOneBitGet(PHONE_DETECT_IN,PHONE_DETECT_PIN))
 		{
@@ -311,6 +316,7 @@ void DetectEarPhone(void)
 			if(gCtrlVars.EarPhoneOnlin)
 			{
 				MUTE_OFF();
+				APP_DBG("****** Mute off, Ear Phone In\n");
 			}
 		}
 	}

@@ -85,8 +85,9 @@ uint8_t BtLocalVolLevel2AbsVolme(uint8_t localValue)
 void HardWareMuteOrUnMute(void)
 {
 	mainAppCt.gSysVol.MuteFlag = !mainAppCt.gSysVol.MuteFlag;
-#ifdef CFG_RONGYUAN_CMD
-#if CUSTOM_MODEL == MODEL_G1
+#if 0 // def CFG_RONGYUAN_CMD
+//#if CUSTOM_MODEL == MODEL_G1
+#ifdef EXT_MUTE_ON()
 	if(mainAppCt.gSysVol.MuteFlag)
 	{
 

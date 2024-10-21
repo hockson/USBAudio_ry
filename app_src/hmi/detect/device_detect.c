@@ -416,6 +416,7 @@ DetectCardExit:
 #endif
 	{		
 		DETECT_STATE NewUDeviceState = DETECT_STATE_NONE;
+
 		if(OTG_PortDeviceIsLink())
 		{
 			NewUDeviceState = DETECT_STATE_IN;

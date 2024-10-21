@@ -152,15 +152,24 @@
 
 /**GPIO按键**/
 #ifdef CFG_RES_IO_KEY_SCAN
-//	#define  CFG_SOFT_POWER_KEY_EN                          //外围硬件自锁式软开关宏开关,开机后，做普通GPIO KEY0使用；
+#if CUSTOM_MODEL == MODEL_GS20
+	#define  CFG_SOFT_POWER_KEY_EN                          //外围硬件自锁式软开关宏开关,开机后，做普通GPIO KEY0使用；
+
+	#define CFG_PARA_WAKEUP_GPIO_IOKEY1		WAKEUP_GPIOA20 // WAKEUP_GPIOA23 //同步设置唤醒端口
+	//#define CFG_PARA_WAKEUP_GPIO_IOKEY2		WAKEUP_GPIOA26 //同步设置唤醒端口
+#endif
+
+#if CUSTOM_MODEL == MODEL_S6
     #define  CFG_GPIO_KEY1_EN                               //GPIO KEY1使能
     #define  CFG_GPIO_KEY2_EN                               //GPIO KEY2使能
      #define  CFG_GPIO_KEY3_EN                               //GPIO KEY2使能
     #define  CFG_GPIO_KEY4_EN                               //GPIO KEY2使能
     #define  CFG_GPIO_KEY5_EN                               //GPIO KEY2使能
+#endif
 
-	#define CFG_PARA_WAKEUP_GPIO_IOKEY1		WAKEUP_GPIOA23 //同步设置唤醒端口
-	#define CFG_PARA_WAKEUP_GPIO_IOKEY2		WAKEUP_GPIOA26 //同步设置唤醒端口
+	//#define CFG_PARA_WAKEUP_GPIO_IOKEY1		WAKEUP_GPIOA20 // WAKEUP_GPIOA23 //同步设置唤醒端口
+	//#define CFG_PARA_WAKEUP_GPIO_IOKEY2		WAKEUP_GPIOA26 //同步设置唤醒端口
+
 #endif
 
 //****************************************************************************************
@@ -290,7 +299,7 @@
 #ifdef	CFG_SOFT_POWER_KEY_EN
 	 //SOFT POWER KEY, GPIOA27做POWER KEY检测
 #define POWER_KEY_PORT             A
-#define POWER_KEY_PIN              GPIO_INDEX27
+#define POWER_KEY_PIN              GPIO_INDEX20 // GPIO_INDEX27
 #endif
 	 //------------------------------------------------------------------------//
 	 
@@ -324,8 +333,8 @@
 	 
 	 //------耳机检测IO选择----------------------------------------------------//
 #ifdef CFG_FUNC_DETECT_PHONE_EN
-#define PHONE_DETECT_PORT          B
-#define PHONE_DETECT_PIN           GPIO_INDEX27
+#define PHONE_DETECT_PORT          A   // B
+#define PHONE_DETECT_PIN           DET_PHONE_INPUT_PIN // GPIO_INDEX27
 #endif
 	 //------------------------------------------------------------------------//
 	 
@@ -359,8 +368,8 @@
 	 //------------------------------------------------------------------------//
 	 
 	 //------MUTE电路或耳放MUTE控制IO选择--------------------------------------//
-#define MUTE_CTL_PORT              B
-#define MUTE_CTL_PIN               0//GPIO_INDEX21
+#define MUTE_CTL_PORT            A //  B
+#define MUTE_CTL_PIN               EXT_AMP_MUTE_PIN // 8//GPIO_INDEX21
 	 
 	 //------------------------------------------------------------------------//
 	 
@@ -700,31 +709,31 @@
 	 
 	 
 	 //------MIC MUTE控制相关宏定义---------------------------------------------------//
-#define MIC_MUTE_ON()	  do{\
+#define MIC_MUTE_ON()	 /*  do{\
 							  GPIO_RegOneBitClear(MIC_MUTE_CTL_IE, MIC_MUTE_CTL_PIN);\
 							  GPIO_RegOneBitSet(MIC_MUTE_CTL_OE, MIC_MUTE_CTL_PIN);\
 							  GPIO_RegOneBitSet(MIC_MUTE_CTL_OUT, MIC_MUTE_CTL_PIN);\
-							  }while(0)
+							  }while(0) */
 							  
-#define MIC_MUTE_OFF()	   do{\
+#define MIC_MUTE_OFF()	  /* do{\
 							  GPIO_RegOneBitClear(MIC_MUTE_CTL_IE, MIC_MUTE_CTL_PIN);\
 							  GPIO_RegOneBitSet(MIC_MUTE_CTL_OE, MIC_MUTE_CTL_PIN);\
 							  GPIO_RegOneBitClear(MIC_MUTE_CTL_OUT, MIC_MUTE_CTL_PIN);\
-							  }while(0) 				  
+							  }while(0) 		*/		  
 	 //-------------------------------------------------------------------------------//
 	 
 	 
 	 //------外部总电源控制相关宏定义-------------------------------------------------//
-#define POWER_ON()     do{\
+#define POWER_ON()     /*do{\
 							  GPIO_RegOneBitClear(POWER_CTL_IE, POWER_CTL_PIN);\
 							  GPIO_RegOneBitSet(POWER_CTL_OE, POWER_CTL_PIN);\
 							  GPIO_RegOneBitSet(POWER_CTL_OUT, POWER_CTL_PIN);\
-							  }while(0);
-#define POWER_OFF()     do{\
+							  }while(0); */
+#define POWER_OFF()    /* do{\
 							  GPIO_RegOneBitClear(POWER_CTL_IE, POWER_CTL_PIN);\
 							  GPIO_RegOneBitSet(POWER_CTL_OE, POWER_CTL_PIN);\
 							  GPIO_RegOneBitClear(POWER_CTL_OUT, POWER_CTL_PIN);\
-							  }while(0);
+							  }while(0); */
 	 //-------------------------------------------------------------------------------//
 	 
 #endif //end of __USER_HW_INTERFACE__

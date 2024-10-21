@@ -127,7 +127,7 @@ static const uint16_t ADKEY_TAB[][5] =
 static const uint16_t IOKEY_TAB[][5] =
 {
     //KEY_PRESSED					SHORT_RELEASE                 LONG_PRESS                  KEY_HOLD                    LONG_PRESS_RELEASE
-	{MSG_NONE,						MSG_NONE,	        			MSG_NONE,                   MSG_NONE,                   MSG_NONE},
+	{MSG_NONE,						MSG_NONE,	        			MSG_NONE,                   MSG_NONE,                   MSG_DEEPSLEEP},
 	{MSG_NONE,						MSG_PLAY_PAUSE,          			MSG_BT_HF_CALL_REJECT,     			MSG_NONE,    				MSG_NONE},
 	{MSG_NONE,						MSG_MUSIC_VOLDOWN,			MSG_MUSIC_VOLDOWN,			MSG_MUSIC_VOLDOWN,                 MSG_NONE},
 	{MSG_NONE,						MSG_MUSIC_VOLUP,				MSG_MUSIC_VOLUP,			MSG_MUSIC_VOLUP,   				MSG_NONE},
