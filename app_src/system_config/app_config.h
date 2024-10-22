@@ -42,20 +42,11 @@
 #define	 CFG_SDK_VER_CHIPID			(0xB5)
 #define  CFG_SDK_MAJOR_VERSION	0 //	(0)
 #define  CFG_SDK_MINOR_VERSION	6 //	(5)
-#define  CFG_SDK_PATCH_VERSION	6  //	(0)
+#define  CFG_SDK_PATCH_VERSION	7  //	(0)
 
 
 #define CFG_RONGYUAN_CMD
 
-#define EQ_OFF		0
-#define EQ_CLASSIC	1
-#define EQ_POP		2
-#define EQ_ROCK		3
-#define EQ_JAZZ		4
-#define EQ_CUST1		5
-#define EQ_CUST2		6
-#define EQ_CUST3		7
-#define EQ_MAX_NUM		8
 
 #define MODEL_DEMO		0		
 #define MODEL_G1		1		
@@ -129,6 +120,16 @@
 #define CFG_RES_IO_KEY_SCAN
 
 #endif
+
+#define EQ_OFF		0
+#define EQ_CLASSIC	1
+#define EQ_POP		2
+#define EQ_ROCK		3
+#define EQ_JAZZ		4
+#define EQ_CUST1		5
+#define EQ_CUST2		6
+#define EQ_CUST3		7
+#define EQ_MAX_NUM		8
 
 //****************************************************************************************
 // 系统App功能模式选择

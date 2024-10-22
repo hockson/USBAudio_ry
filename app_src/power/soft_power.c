@@ -48,7 +48,11 @@ void WaitSoftKey(void)
 	{
 		WDG_Feed();
 		WaitMs(1000);//长按1S开机
-		if(!GPIO_RegOneBitGet(POWER_KEY_IN,POWER_KEY_PIN))
+#if CUSTOM_MODEL == MODEL_GS20
+		if(GPIO_RegOneBitGet(POWER_KEY_IN,POWER_KEY_PIN))
+#else
+		if(!GPIO_RegOneBitGet(POWER_KEY_IN,POWER_KEY_PIN))			
+#endif
 		{
 			POWER_ON();
 			#if CFG_LED_EN
