@@ -624,8 +624,10 @@ int8_t BtDdb_LoadBtConfigurationParams(BT_CONFIGURATION_PARAMS *params)
 	
 	ret = SpiFlashRead(BTDB_CONFIG_ADDR, (uint8_t*)params, sizeof(BT_CONFIGURATION_PARAMS), 0);
 
+
 	memcpy(params->bt_LocalDeviceName,sys_parameter.bt_LocalDeviceName,BT_NAME_SIZE);
 	memcpy(params->ble_LocalDeviceName,sys_parameter.ble_LocalDeviceName,BLE_NAME_SIZE);	
+
 	
 	if(ret != FLASH_NONE_ERR)
 		return -3;	//flash ¶ÁÈ¡´íÎó
@@ -651,7 +653,11 @@ int32_t BtDeviceSaveNameToFlash(char* deviceName, uint8_t deviceLen,uint8_t name
 
 		if(name_type == 1)
 		{
+#ifdef CFG_RONGYUAN_CMD
+			if(memcmp(sys_parameter.ble_LocalDeviceName, deviceName, deviceLen) != 0)
+#else			
 			if(sys_parameter.ble_LocalDeviceName != deviceName)
+#endif
 			{
 				if(deviceLen > BLE_NAME_SIZE)
 					deviceLen = BLE_NAME_SIZE;
@@ -662,7 +668,11 @@ int32_t BtDeviceSaveNameToFlash(char* deviceName, uint8_t deviceLen,uint8_t name
 		}
 		else
 		{
-			if(sys_parameter.bt_LocalDeviceName != deviceName)
+#ifdef CFG_RONGYUAN_CMD
+			if(memcmp(sys_parameter.bt_LocalDeviceName, deviceName, deviceLen) != 0)
+#else				
+			if(sys_parameter.bt_LocalDeviceName != deviceName)				
+#endif				
 			{
 				if(deviceLen > BT_NAME_SIZE)
 					deviceLen = BT_NAME_SIZE;

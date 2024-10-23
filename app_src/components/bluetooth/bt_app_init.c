@@ -227,6 +227,7 @@ static void prinfBtConfigParams(void)
 			);
 	
 	//ble address
+	APP_DBG("Bt Name:%s\n", btStackConfigParams->ble_LocalDeviceName);
 	APP_DBG("BleAddr:");
 	APP_DBG("%02x:%02x:%02x:%02x:%02x:%02x\n", 
 			btStackConfigParams->ble_LocalDeviceAddr[0],
@@ -263,6 +264,27 @@ void LoadBtConfigurationParams(void)
 			return;
 		}
 	}
+#ifdef CFG_RONGYUAN_CMD    
+{
+	char namestr[BLE_NAME_SIZE];
+	sprintf((void *)namestr,"%s%02X%02X",BLE_NAME, btStackConfigParams->ble_LocalDeviceAddr[1], btStackConfigParams->ble_LocalDeviceAddr[0]);
+	
+	//APP_DBG(">>>>>> config name: %s -- %s\n", btStackConfigParams->bt_LocalDeviceName, btStackConfigParams->ble_LocalDeviceName);
+	if(strcmp(namestr, btStackConfigParams->ble_LocalDeviceName) != 0)
+	{
+		BtDeviceSaveNameToFlash(namestr, strlen(namestr), 1);
+		memcpy(btStackConfigParams->ble_LocalDeviceName, namestr,strlen(namestr));	
+	}
+
+	sprintf((void *)namestr,"%s%02X%02X",BT_NAME, btStackConfigParams->bt_LocalDeviceAddr[1], btStackConfigParams->bt_LocalDeviceAddr[0]);
+	if(strcmp(namestr, btStackConfigParams->bt_LocalDeviceName) != 0)
+	{
+		BtDeviceSaveNameToFlash(namestr, strlen(namestr), 0);
+		memcpy(btStackConfigParams->bt_LocalDeviceName, namestr,strlen(namestr));
+	}
+	
+}
+#endif
 	
 	//BT ADDR
 	ret = CheckBtAddr(btStackConfigParams->bt_LocalDeviceAddr);
@@ -319,7 +341,6 @@ void LoadBtConfigurationParams(void)
 		strcpy((void *)btStackConfigParams->ble_LocalDeviceName, sys_parameter.ble_LocalDeviceName);
 	}
 #endif
-
 	//BT PARAMS
 	ret = CheckBtParamHeader(btStackConfigParams->bt_ConfigHeader);
 	if(ret != 0)

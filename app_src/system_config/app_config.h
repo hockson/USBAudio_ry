@@ -53,7 +53,7 @@
 #define MODEL_GS20		2
 #define MODEL_S6		3
 
-#define CUSTOM_MODEL	MODEL_GS20 // MODEL_S6
+#define CUSTOM_MODEL	MODEL_GS20
 
 #define GPIOA_INIT(x)  	    GPIO_PortAModeSet(x, 0),\
 							GPIO_RegOneBitClear(GPIO_A_PU, x),\

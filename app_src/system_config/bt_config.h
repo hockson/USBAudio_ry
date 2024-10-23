@@ -56,8 +56,8 @@
  * 2.BLE的名称修改在ble广播数据中体现(ble_app_func.c)
  *****************************************************************/
 //#include "bt_name.h"
-#define BT_NAME						"BP15_BT"
-#define BLE_NAME					"BP15_BLE"
+#define BT_NAME						"UA-BT-" // "BP15_BT"
+#define BLE_NAME					"UA-BLE-" // "BP15_BLE"
 
 //蓝牙发射功率配置
 /* Rf Tx Power Range, max:7dbm, step:1dbm/step

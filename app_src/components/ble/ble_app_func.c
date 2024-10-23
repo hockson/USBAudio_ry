@@ -128,7 +128,7 @@ static uint8_t rsp_adv_len = sizeof(ble_app_rsp_adv_data);
 uint8_t LeInitConfigParams(void)
 {
 
-	printf("RD_P: 0x%04x,WR_P: 0x%04x,NTF_P: 0x%04x,IND_P: 0x%04x",RD_P,WR_P,NTF_P,IND_P);
+	printf("RD_P: 0x%04x,WR_P: 0x%04x,NTF_P: 0x%04x,IND_P: 0x%04x\n",RD_P,WR_P,NTF_P,IND_P);
     LeAppRegCB(AppEventCallBack); // 注册应用层事件回调函数
     user_set_ble_bd_addr(btStackConfigParams->ble_LocalDeviceAddr);
     // BLE广播数据内容填充
@@ -136,6 +136,7 @@ uint8_t LeInitConfigParams(void)
     memcpy(le_user_config.ble_device_name,BLE_DFLT_DEVICE_NAME,le_user_config.ble_device_name_len);
     ble_app_adv_data[3] = BLE_DFLT_DEVICE_NAME_LEN+1;
     memcpy(&ble_app_adv_data[5],le_user_config.ble_device_name,le_user_config.ble_device_name_len);
+	printf("***** ble name:%s - %s\n",le_user_config.ble_device_name,BLE_DFLT_DEVICE_NAME);
 
     le_user_config.adv_data.adv_data = (uint8_t *)ble_app_adv_data;
     le_user_config.adv_data.adv_len = adv_len;
